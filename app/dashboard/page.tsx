@@ -16,26 +16,28 @@ import {
 } from 'lucide-react'
 
 export default function DashboardPage() {
+  const [sidebarOpen, setSidebarOpen] = React.useState(false)
+
   return (
     <div className="min-h-screen bg-neutral-100">
-      <Sidebar activeTab="dashboard" />
+      <Sidebar activeTab="dashboard" isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="ml-64">
-        <TopBar />
+      <div className="lg:ml-64">
+        <TopBar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="pt-16 p-6">
+        <main className="pt-16 p-4 lg:p-6">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+          <div className="mb-6 lg:mb-8">
+            <h1 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-2">
               Tableau de bord
             </h1>
-            <p className="text-neutral-600">
+            <p className="text-sm lg:text-base text-neutral-600">
               Vue d'ensemble de votre activité et de votre réseau
             </p>
           </div>
 
           {/* Metrics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
             <MetricsCard
               title="Mandats Actifs"
               value="12"
@@ -67,9 +69,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Activity Feed */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
             {/* Recent Activity */}
-            <div className="xl:col-span-2 bg-white border border-neutral-300 rounded-xl p-6">
+            <div className="xl:col-span-2 bg-white border border-neutral-300 rounded-xl p-4 lg:p-6">
               <h2 className="text-lg font-semibold text-neutral-900 mb-4 flex items-center gap-2">
                 <Clock className="w-5 h-5 text-primary" />
                 Activité Récente
@@ -144,9 +146,9 @@ export default function DashboardPage() {
             </div>
 
             {/* Quick Stats */}
-            <div className="space-y-6">
+            <div className="space-y-4 lg:space-y-6">
               {/* Performance This Month */}
-              <div className="bg-white border border-neutral-300 rounded-xl p-6">
+              <div className="bg-white border border-neutral-300 rounded-xl p-4 lg:p-6">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-4 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-primary" />
                   Performance

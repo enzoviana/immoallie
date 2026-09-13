@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   LayoutDashboard,
   Building2,
@@ -9,7 +9,8 @@ import {
   FileText,
   Settings,
   Shield,
-  HelpCircle
+  HelpCircle,
+  X
 } from 'lucide-react'
 import clsx from 'clsx'
 
@@ -33,9 +34,23 @@ const bottomNavItems: NavItem[] = [
   { id: 'help', label: 'Aide', icon: HelpCircle },
 ]
 
-export default function Sidebar({ activeTab = 'dashboard' }: { activeTab?: string }) {
+export default function Sidebar({ activeTab = 'dashboard', isOpen, onClose }: { activeTab?: string, isOpen?: boolean, onClose?: () => void }) {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white text-slate-700 flex flex-col border-r border-slate-200 shadow-sm z-30">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={clsx(
+        "fixed left-0 top-0 h-screen w-64 bg-white text-slate-700 flex flex-col border-r border-slate-200 shadow-sm z-50 transition-transform duration-300",
+        "lg:translate-x-0",
+        isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      )}>
       {/* Logo & Brand */}
       <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -47,6 +62,14 @@ export default function Sidebar({ activeTab = 'dashboard' }: { activeTab?: strin
             <p className="text-[11px] text-slate-400 font-medium tracking-wide uppercase">Réseau Privé</p>
           </div>
         </div>
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={onClose}
+          className="lg:hidden p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+        >
+          <X className="w-5 h-5 text-slate-600" />
+        </button>
       </div>
 
       {/* Main Navigation */}
@@ -128,5 +151,6 @@ export default function Sidebar({ activeTab = 'dashboard' }: { activeTab?: strin
         </div>
       </div>
     </aside>
+    </>
   )
 }

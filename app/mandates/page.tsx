@@ -55,6 +55,7 @@ const mockMandates: Mandate[] = [
 
 export default function MandatesPage() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -84,23 +85,23 @@ export default function MandatesPage() {
 
   return (
     <div className="min-h-screen bg-neutral-100">
-      <Sidebar activeTab="mandates" />
+      <Sidebar activeTab="mandates" isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="ml-64">
-        <TopBar />
+      <div className="lg:ml-64">
+        <TopBar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="pt-16 p-6">
+        <main className="pt-16 p-4 lg:p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+              <h1 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-2">
                 Mes Mandats Exclusifs
               </h1>
-              <p className="text-neutral-600">
+              <p className="text-sm lg:text-base text-neutral-600">
                 Gérez vos biens en vente et suivez leur performance
               </p>
             </div>
-            <button className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md">
+            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg font-medium text-sm lg:text-base transition-all shadow-sm hover:shadow-md whitespace-nowrap">
               <Plus className="w-5 h-5" strokeWidth={2.5} />
               Nouveau Mandat
             </button>
@@ -108,18 +109,18 @@ export default function MandatesPage() {
 
           {/* Search and Filters */}
           <div className="bg-white border border-neutral-300 rounded-xl p-4 mb-6">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 lg:w-5 h-4 lg:h-5 text-neutral-500" />
                 <input
                   type="text"
-                  placeholder="Rechercher par référence, titre ou localisation..."
+                  placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-neutral-50 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full pl-9 lg:pl-10 pr-4 py-2.5 bg-neutral-50 border border-neutral-300 rounded-lg text-xs lg:text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-lg font-medium text-sm transition-all">
+              <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-lg font-medium text-xs lg:text-sm transition-all whitespace-nowrap">
                 <Filter className="w-4 h-4" />
                 Filtres
               </button>
@@ -128,7 +129,8 @@ export default function MandatesPage() {
 
           {/* Mandates Table */}
           <div className="bg-white border border-neutral-300 rounded-xl overflow-hidden">
-            <table className="w-full">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[800px]">
               <thead className="bg-neutral-50 border-b border-neutral-300">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
@@ -215,6 +217,7 @@ export default function MandatesPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </main>
       </div>

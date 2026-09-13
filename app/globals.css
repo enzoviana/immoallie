@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 @layer base {
   * {
@@ -10,6 +10,18 @@
   }
   body {
     @apply bg-neutral-100 text-neutral-900 antialiased;
+  }
+
+  /* Optimisations de performance */
+  img {
+    content-visibility: auto;
+  }
+
+  /* Optimisation pour mobile */
+  @media (max-width: 1024px) {
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 }
 
@@ -20,5 +32,20 @@
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Performance optimizations */
+  .gpu-accelerate {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 }

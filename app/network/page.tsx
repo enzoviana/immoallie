@@ -12,6 +12,7 @@ import { mockProperties } from '@/lib/mockData'
 export default function NetworkPage() {
   const router = useRouter()
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handlePropertyClick = (property: Property) => {
     router.push(`/property/${property.id}`)
@@ -20,22 +21,22 @@ export default function NetworkPage() {
   return (
     <div className="min-h-screen bg-slate-50/50">
       {/* Sidebar */}
-      <Sidebar activeTab="network" />
+      <Sidebar activeTab="network" isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Main Content Layout */}
-      <div className="ml-64 flex flex-col min-h-screen">
+      <div className="lg:ml-64 flex flex-col min-h-screen">
         {/* Top Bar */}
-        <TopBar />
+        <TopBar onMenuClick={() => setSidebarOpen(true)} />
 
         {/* Content Area */}
-        <main className="flex-1 pt-14 pb-12">
+        <main className="flex-1 pt-16 pb-12">
           {/* Filter Bar */}
           <FilterBar viewMode={viewMode} onViewModeChange={setViewMode} />
 
           {/* Properties Grid Container */}
-          <div className="px-8 py-6">
+          <div className="px-4 lg:px-8 py-6">
             <div className="mb-6">
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
+              <h1 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-tight mb-1">
                 Réseau & Co-courtage
               </h1>
               <p className="text-sm text-slate-500">
@@ -44,7 +45,7 @@ export default function NetworkPage() {
             </div>
 
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
                 {mockProperties.map((property) => (
                   <PropertyCard
                     key={property.id}

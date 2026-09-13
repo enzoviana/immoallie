@@ -1,15 +1,23 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Search, Plus, Bell, ChevronDown, Command } from 'lucide-react'
+import { Search, Plus, Bell, ChevronDown, Command, Menu } from 'lucide-react'
 import NotificationPanel from './NotificationPanel'
 
-export default function TopBar() {
+export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   const [showNotifications, setShowNotifications] = useState(false)
 
   return (
     <>
-      <header className="fixed top-0 py-2 left-64 right-0 h-18 bg-white border-b border-slate-200 z-40 px-8 flex items-center justify-between gap-4 shadow-xs">
+      <header className="fixed top-0 py-2 left-0 lg:left-64 right-0 h-18 bg-white border-b border-slate-200 z-40 px-4 lg:px-8 flex items-center justify-between gap-2 lg:gap-4 shadow-xs">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+        >
+          <Menu className="w-5 h-5 text-slate-600" strokeWidth={2} />
+        </button>
+
         {/* Global Search */}
         <div className="flex-1 max-w-xl">
           <div className="relative group">
@@ -26,11 +34,11 @@ export default function TopBar() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 lg:gap-3">
           {/* Publish Mandate Button */}
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30">
+          <button className="flex items-center gap-2 px-3 lg:px-4 py-2 lg:py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-xs lg:text-sm transition-all duration-200 shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30">
             <Plus className="w-4 h-4" strokeWidth={2.5} />
-            Publier un mandat
+            <span className="hidden sm:inline">Publier un mandat</span>
           </button>
 
           {/* Notifications */}
